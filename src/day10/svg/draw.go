@@ -1,18 +1,12 @@
-/*
-	通过浮点数计算生成图行
-*/
-package main
+package draw
 
 import (
 	"fmt"
 	"io"
-	"log"
 	"math"
-	"net/http"
 )
 
 var sin30, cos30 = math.Sin(angle), math.Cos(angle) // sin(30°), cos(30°)
-
 const (
 	width, height = 600, 320            // canvas size in pixels
 	cells         = 100                 // number of grid cells
@@ -22,19 +16,7 @@ const (
 	angle         = math.Pi / 6         // angle of x, y axes (=30°)
 )
 
-func main() {
-	http.HandleFunc("/", handler) //服务器监听path /, 每个pattern对应handler
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
-}
-
-//请求事件函数, 负责响应客户端 /请求
-func handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "image/svg+xml")
-	draw(w)
-}
-
-//最终的一个图新绘制函数
-func draw(w io.Writer) {
+func Draw(w io.Writer) {
 	//图像输送到客户端原理
 	/*
 		这里调用fmt包的Fprintf函数，将格式化内容写入到标准输出流io中中。调用draw时候，则是直接服务端响应内容拷贝到标准输出流io中

@@ -1,11 +1,7 @@
-/*
-	使用go写web服务器.
-*/
-
 package main
 
 import (
-	"fmt"
+	"./svg"
 	"log"
 	"net/http"
 )
@@ -16,5 +12,6 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+	w.Header().Set("Content-Type", "image/svg+xml")
+	draw.Draw(w)
 }
